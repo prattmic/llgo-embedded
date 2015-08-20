@@ -47,3 +47,26 @@ Regenerating Makefiles
 ======================
 
 Use *exactly* autoconf 2.65 and libtool 2.2.8.  Run `autoreconf -fi`.
+
+Building for arm-none-eabi
+==========================
+
+`LLVM_BUILD_DIR` is the directory you built LLVM in, and `LLVM_INSTALL_DIR`
+is the directory it installed to.
+
+This will generate libgobegin.a (contains main) and .libs/libgo-runtime.a:
+
+    $ mkdir build && cd build
+    $ ../configure CC="env REAL_CC=${LLVM_INSTALL_DIR}/bin/clang ${LLVM_BUILD_DIR}/bin/cc-wrapper" CFLAGS="--target=arm-none-eabi -mcpu=cortex-m4 -nostdlib" --host=arm-none-eabi --without-libffi --without-stack-split
+    $ make libgo-runtime.la libgobegin.a -j4
+
+You will also want libbacktrace.a:
+
+    $ cd ../libbacktrace
+    $ mkdir build && cd build
+    $ ../configure CC="env REAL_CC=${LLVM_INSTALL_DIR}/bin/clang ${LLVM_BUILD_DIR}/bin/cc-wrapper" CFLAGS="--target=arm-none-eabi -mcpu=cortex-m4 -nostdlib" --host=arm-none-eabi
+    $ make -j4
+
+Build an object that contains _start and link it with the magic:
+
+    $ clang --target=arm-none-eabi hello.o ./build/libgobegin.a ./build/.libs/libgo-runtime.a ../libbacktrace/build/.libs/libbacktrace.a -nostdlib -lgcc
