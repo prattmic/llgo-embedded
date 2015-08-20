@@ -427,7 +427,27 @@ else
 if LIBGO_IS_SOLARIS
 runtime_netpoll_files = runtime/netpoll_select.c
 else
+if LIBGO_IS_DARWIN
 runtime_netpoll_files = runtime/netpoll_kqueue.c
+else
+if LIBGO_IS_DRAGONFLY
+runtime_netpoll_files = runtime/netpoll_kqueue.c
+else
+if LIBGO_IS_FREEBSD
+runtime_netpoll_files = runtime/netpoll_kqueue.c
+else
+if LIBGO_IS_NETBSD
+runtime_netpoll_files = runtime/netpoll_kqueue.c
+else
+if LIBGO_IS_OPENBSD
+runtime_netpoll_files = runtime/netpoll_kqueue.c
+else
+runtime_netpoll_files =
+endif
+endif
+endif
+endif
+endif
 endif
 endif
 
