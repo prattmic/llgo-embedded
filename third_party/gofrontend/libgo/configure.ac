@@ -365,6 +365,12 @@ case "$target" in
 esac
 AC_SUBST(OSCFLAGS)
 
+AC_ARG_WITH(stack-split,
+  AS_HELP_STRING([--without-stack-split],
+                 [use stack split, if available]),
+  [:],
+  [with_stack_split=${with_stack_split_default-yes}])
+
 dnl Use -fsplit-stack when compiling C code if available.
 AC_CACHE_CHECK([whether -fsplit-stack is supported],
 [libgo_cv_c_split_stack_supported],
@@ -374,7 +380,7 @@ AC_COMPILE_IFELSE([[int i;]],
 [libgo_cv_c_split_stack_supported=yes],
 [libgo_cv_c_split_stack_supported=no])
 CFLAGS=$CFLAGS_hold])
-if test "$libgo_cv_c_split_stack_supported" = yes; then
+if test "$libgo_cv_c_split_stack_supported" = yes -a "$with_stack_split" = yes; then
   SPLIT_STACK=-fsplit-stack
   AC_DEFINE(USING_SPLIT_STACK, 1,
 		[Define if the compiler supports -fsplit-stack])
@@ -383,7 +389,7 @@ else
 fi
 AC_SUBST(SPLIT_STACK)
 AM_CONDITIONAL(USING_SPLIT_STACK,
-	test "$libgo_cv_c_split_stack_supported" = yes)
+	test "$libgo_cv_c_split_stack_supported" = yes -a "$with_stack_split" = yes)
 
 dnl Check whether the linker does stack munging when calling from
 dnl split-stack into non-split-stack code.  We check this by looking
@@ -396,7 +402,7 @@ AC_CACHE_CHECK([whether linker supports split stack],
 if $GOC -Wl,--help 2>/dev/null | grep split-stack-adjust-size >/dev/null 2>&1; then
   libgo_cv_c_linker_supports_split_stack=yes
 fi])
-if test "$libgo_cv_c_linker_supports_split_stack" = yes; then
+if test "$libgo_cv_c_linker_supports_split_stack" = yes -a "$with_stack_split" = yes; then
   AC_DEFINE(LINKER_SUPPORTS_SPLIT_STACK, 1,
 	    [Define if the linker support split stack adjustments])
 fi

@@ -834,6 +834,7 @@ enable_werror
 enable_version_specific_runtime_libs
 with_libffi
 with_libatomic
+with_stack_split
 enable_sjlj_exceptions
 '
       ac_precious_vars='build_alias
@@ -1490,6 +1491,7 @@ Optional Packages:
                           both]
   --without-libffi        don't use libffi
   --without-libatomic     don't use libatomic
+  --without-stack-split   use stack split, if available
 
 Some influential environment variables:
   CC          C compiler command
@@ -12152,6 +12154,15 @@ case "$target" in
 esac
 
 
+
+# Check whether --with-stack-split was given.
+if test "${with_stack_split+set}" = set; then :
+  withval=$with_stack_split; :
+else
+  with_stack_split=${with_stack_split_default-yes}
+fi
+
+
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether -fsplit-stack is supported" >&5
 $as_echo_n "checking whether -fsplit-stack is supported... " >&6; }
 if test "${libgo_cv_c_split_stack_supported+set}" = set; then :
@@ -12173,7 +12184,7 @@ CFLAGS=$CFLAGS_hold
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $libgo_cv_c_split_stack_supported" >&5
 $as_echo "$libgo_cv_c_split_stack_supported" >&6; }
-if test "$libgo_cv_c_split_stack_supported" = yes; then
+if test "$libgo_cv_c_split_stack_supported" = yes -a "$with_stack_split" = yes; then
   SPLIT_STACK=-fsplit-stack
 
 $as_echo "#define USING_SPLIT_STACK 1" >>confdefs.h
@@ -12182,7 +12193,7 @@ else
   SPLIT_STACK=
 fi
 
- if test "$libgo_cv_c_split_stack_supported" = yes; then
+ if test "$libgo_cv_c_split_stack_supported" = yes -a "$with_stack_split" = yes; then
   USING_SPLIT_STACK_TRUE=
   USING_SPLIT_STACK_FALSE='#'
 else
@@ -12203,7 +12214,7 @@ fi
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $libgo_cv_c_linker_supports_split_stack" >&5
 $as_echo "$libgo_cv_c_linker_supports_split_stack" >&6; }
-if test "$libgo_cv_c_linker_supports_split_stack" = yes; then
+if test "$libgo_cv_c_linker_supports_split_stack" = yes -a "$with_stack_split" = yes; then
 
 $as_echo "#define LINKER_SUPPORTS_SPLIT_STACK 1" >>confdefs.h
 
