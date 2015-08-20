@@ -79,9 +79,9 @@
 
 PROGRAM=libtool
 PACKAGE=libtool
-VERSION=2.2.7a
+VERSION=2.2.8
 TIMESTAMP=" 1.3134 2009-11-29"
-package_revision=1.3134
+package_revision=1.3169
 
 # Be Bourne compatible
 if test -n "${ZSH_VERSION+set}" && (emulate sh) >/dev/null 2>&1; then

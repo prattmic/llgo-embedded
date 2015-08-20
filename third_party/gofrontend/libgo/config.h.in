@@ -66,9 +66,6 @@
 /* Define to 1 if you have the `futimesat' function. */
 #undef HAVE_FUTIMESAT
 
-/* Define if _Unwind_GetIPInfo is available. */
-#undef HAVE_GETIPINFO
-
 /* Define to 1 if you have the `getxattr' function. */
 #undef HAVE_GETXATTR
 
