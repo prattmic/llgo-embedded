@@ -15,7 +15,10 @@
 
 #if !defined (HAVE_SYNC_BOOL_COMPARE_AND_SWAP_4) || !defined (HAVE_SYNC_BOOL_COMPARE_AND_SWAP_8) || !defined (HAVE_SYNC_FETCH_AND_ADD_4) || !defined (HAVE_SYNC_ADD_AND_FETCH_8)
 
+/* FIXME(prattmic): see below */
+#if 0
 static pthread_mutex_t sync_lock = PTHREAD_MUTEX_INITIALIZER;
+#endif
 
 #endif
 
@@ -109,12 +112,17 @@ __sync_fetch_and_add_4 (uint32* ptr, uint32 add)
 
 #ifndef HAVE_SYNC_ADD_AND_FETCH_8
 
-uint64
-__sync_add_and_fetch_8 (uint64*, uint64)
+/*
+ * FIXME(prattmic): LLVM thinks this is overriding a builtin, even though it
+ * doesn't provide this builtin.
+ */
+#if 0
+long long
+__sync_add_and_fetch_8 (volatile long long*, long long, ...)
   __attribute__ ((visibility ("hidden")));
 
-uint64
-__sync_add_and_fetch_8 (uint64* ptr, uint64 add)
+long long
+__sync_add_and_fetch_8 (volatile long long* ptr, long long add, ...)
 {
   int i;
   uint64 ret;
@@ -130,6 +138,7 @@ __sync_add_and_fetch_8 (uint64* ptr, uint64 add)
 
   return ret;
 }
+#endif
 
 #endif
 

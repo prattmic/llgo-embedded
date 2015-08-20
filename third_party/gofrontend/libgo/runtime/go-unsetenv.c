@@ -24,7 +24,6 @@ unsetenv_c (String k)
 {
   const byte *ks;
   unsigned char *kn;
-  intgo len;
 
   ks = k.str;
   if (ks == NULL)
@@ -32,6 +31,7 @@ unsetenv_c (String k)
   kn = NULL;
 
 #ifdef HAVE_UNSETENV
+  intgo len;
 
   if (ks != NULL && ks[k.len] != 0)
     {

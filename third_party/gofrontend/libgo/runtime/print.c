@@ -63,7 +63,7 @@ runtime_prints(const char *s)
 	gwrite(s, runtime_findnull((const byte*)s));
 }
 
-#if defined (__clang__) && (defined (__i386__) || defined (__x86_64__))
+#if defined (__clang__)
 // LLVM's code generator does not currently support split stacks for vararg
 // functions, so we disable the feature for this function under Clang. This
 // appears to be OK as long as:
