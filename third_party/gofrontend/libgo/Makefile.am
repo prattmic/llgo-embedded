@@ -101,7 +101,7 @@ AM_MAKEFLAGS = \
 FLAGS_TO_PASS = $(AM_MAKEFLAGS)
 
 if GOC_IS_LLGO
-toolexeclib_LTLIBRARIES = libgo-llgo.la
+toolexeclib_LTLIBRARIES = libgo-llgo.la libgo-runtime.la
 toolexeclib_LIBRARIES = libgobegin-llgo.a
 else
 toolexeclib_LTLIBRARIES = libgo.la
@@ -2014,6 +2014,10 @@ libgo_libadd = \
 libgo_la_SOURCES = $(runtime_files)
 libgo_la_LDFLAGS = $(libgo_ldflags)
 libgo_la_LIBADD = $(libgo_libadd)
+
+libgo_runtime_la_SOURCES = $(runtime_files)
+libgo_runtime_la_LDFLAGS = $(libgo_ldflags)
+libgo_runtime_la_LIBADD =
 
 libgo_llgo_la_SOURCES = $(runtime_files)
 libgo_llgo_la_LDFLAGS = $(libgo_ldflags)
