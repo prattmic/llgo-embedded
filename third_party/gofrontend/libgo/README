@@ -42,3 +42,8 @@ http://code.google.com/legal/corporate-cla-v1.0.html.
 If the copyright holder for your code has already completed the
 agreement in connection with another Google open source project, it
 does not need to be completed again.
+
+Regenerating Makefiles
+======================
+
+Use *exactly* autoconf 2.65 and libtool 2.2.8.  Run `autoreconf -fi`.

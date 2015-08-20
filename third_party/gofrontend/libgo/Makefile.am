@@ -38,7 +38,7 @@ WARN_CFLAGS = $(WARN_FLAGS) $(WERROR)
 # -I/-D flags to pass when compiling.
 AM_CPPFLAGS = -I $(srcdir)/runtime $(LIBFFIINCS) $(PTHREAD_CFLAGS)
 
-ACLOCAL_AMFLAGS = -I ./config -I ../config
+ACLOCAL_AMFLAGS = -I ./config
 
 AM_CFLAGS = -fexceptions -fnon-call-exceptions -fplan9-extensions \
 	$(SPLIT_STACK) $(WARN_CFLAGS) \

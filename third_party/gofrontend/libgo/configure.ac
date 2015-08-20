@@ -14,7 +14,7 @@ AC_CONFIG_HEADER(config.h)
 libtool_VERSION=7:0:0
 AC_SUBST(libtool_VERSION)
 
-AM_ENABLE_MULTILIB(, ..)
+#AM_ENABLE_MULTILIB(, ..)
 
 AC_CANONICAL_SYSTEM
 target_alias=${target_alias-$host_alias}
